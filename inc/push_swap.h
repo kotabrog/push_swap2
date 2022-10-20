@@ -11,7 +11,6 @@
 # define ERROR 1
 # define BUFF_SIZE 1024
 # define COMMAND_SIZE 64
-# define COMMAND_NEXT 0
 # define COMMAND_SA 2
 # define COMMAND_SB 3
 # define COMMAND_SS 4
@@ -45,21 +44,29 @@ typedef struct s_num {
 
 typedef struct s_command {
     char *list;
+    int capacity;
     int len;
-    int point;
 } t_command;
+
+typedef struct s_two_stack {
+    t_cdl_list *list1;
+    t_cdl_list *list2;
+    t_command *command;
+} t_two_stack;
 
 
 int check_argment(int argc, char **argv, t_cdl_list **list);
 int	set_int_data(t_int_data **data);
 int	set_int(char *s, t_int_data *data, t_num *num);
 int check_duplicate(t_cdl_list *list);
+int bfs_push_swap(t_cdl_list *list, t_command **command);
 
 // lib
 int ft_malloc(void *pointer, size_t type_size, size_t n);
 int ft_free(void *pointer);
 void int_cpy(int *p, const int *s, size_t n);
 int ft_isdigit(int c);
+size_t ft_strlen(const char *s);
 
 // cdl_list
 int make_element(t_cdl_list **element, void *v);
@@ -69,6 +76,12 @@ int int_to_element(t_cdl_list **list, int v);
 int push_int(t_cdl_list **list, int v);
 int len_list(t_cdl_list *list);
 int put_list(t_cdl_list *list);
+void free_list(t_cdl_list **list);
+
+// command
+int make_command(t_command **command);
+void free_command(t_command **command);
+int print_commands(t_command *command);
 
 
 #endif

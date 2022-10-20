@@ -13,6 +13,7 @@ SOURCES =	main.c \
 			cdl_list/push_element.c \
 			cdl_list/len.c \
 			cdl_list/put_list.c \
+			command/make_command.c \
 
 SOURCES_PREFIXED = $(addprefix $(SOURCES_FOLDER), $(SOURCES))
 
@@ -33,6 +34,7 @@ $(OBJECTS_FOLDER)%.o: $(SOURCES_FOLDER)%.c
 	@mkdir -p $(OBJECTS_FOLDER)
 	@mkdir -p $(OBJECTS_FOLDER)lib
 	@mkdir -p $(OBJECTS_FOLDER)cdl_list
+	@mkdir -p $(OBJECTS_FOLDER)command
 	@echo "Compiling : $<"
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INCLUDES_FOLDER)
 
