@@ -13,6 +13,5 @@ void free_list(t_cdl_list **list)
         *list = (*list)->next;
         free(temp);
     }
-    free(*list);
-    *list = NULL;
+    ft_free(list);
 }

@@ -67,6 +67,7 @@ int ft_free(void *pointer);
 void int_cpy(int *p, const int *s, size_t n);
 int ft_isdigit(int c);
 size_t ft_strlen(const char *s);
+void ft_strcpy(char *p, char const *s, size_t n);
 
 // cdl_list
 int make_element(t_cdl_list **element, void *v);
@@ -77,11 +78,19 @@ int push_int(t_cdl_list **list, int v);
 int len_list(t_cdl_list *list);
 int put_list(t_cdl_list *list);
 void free_list(t_cdl_list **list);
+t_cdl_list *cpy_list(t_cdl_list *list);
 
 // command
 int make_command(t_command **command);
 void free_command(t_command **command);
 int print_commands(t_command *command);
+int cpy_command(t_command *src, t_command **dest);
+int add_command(t_command *command, char one_command);
+
+// two_stack
+
+int make_two_stack(t_two_stack **two_stack, t_cdl_list *list1,
+                   t_cdl_list *list2, t_command *command);
 
 
 #endif
