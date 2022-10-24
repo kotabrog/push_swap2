@@ -79,6 +79,16 @@ int len_list(t_cdl_list *list);
 int put_list(t_cdl_list *list);
 void free_list(t_cdl_list **list);
 t_cdl_list *cpy_list(t_cdl_list *list);
+t_cdl_list *pop_element(t_cdl_list **list);
+t_cdl_list *pop_back_element(t_cdl_list *list);
+int swap_list(t_cdl_list **list);
+int swap_two_list(t_cdl_list **list1, t_cdl_list **list2);
+int pop_and_push_list(t_cdl_list **giver, t_cdl_list **receiver);
+int rotate_list(t_cdl_list **list);
+int rotate_two_list(t_cdl_list **list1, t_cdl_list **list2);
+int rotate_reverse_list(t_cdl_list **list);
+int rotate_reverse_two_list(t_cdl_list **list1, t_cdl_list **list2);
+int is_sorted_list(t_cdl_list *list);
 
 // command
 int make_command(t_command **command);
@@ -91,6 +101,8 @@ int add_command(t_command *command, char one_command);
 
 int make_two_stack(t_two_stack **two_stack, t_cdl_list *list1,
                    t_cdl_list *list2, t_command *command);
+int operate_command(t_cdl_list **list1, t_cdl_list **list2, char command);
+int operate_commands(t_two_stack *target);
 
 
 #endif

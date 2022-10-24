@@ -4,7 +4,7 @@ t_cdl_list *cpy_list(t_cdl_list *list)
 {
     t_cdl_list *out;
 
-    if (make_new_element(&out, NULL))
+    if (make_element(&out, NULL))
         return (NULL);
     if (list->v == NULL)
         return (out);

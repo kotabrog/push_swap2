@@ -9,7 +9,9 @@ void put_result_and_exit(int mode)
 
 int push_swap(t_cdl_list *list, t_command **command)
 {
-    if (bfs_push_swap(list, &command))
+    if (is_sorted_list(list))
+        return (SUCCESS);
+    if (bfs_push_swap(list, command))
         return (ERROR);
     return (SUCCESS);
 }

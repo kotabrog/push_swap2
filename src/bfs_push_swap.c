@@ -10,6 +10,8 @@ static int update_bfs_command(t_command *command)
     if (i < command->len)
     {
         command->list[i] += 1;
+        while (i-- > 0)
+            command->list[i] = COMMAND_SA;
     }
     else
     {
@@ -34,16 +36,21 @@ static int init_two_stack(t_two_stack *target, t_cdl_list *list)
 int bfs_push_swap(t_cdl_list *list, t_command **command)
 {
     t_two_stack target;
+    int continue_flag;
 
     target.command = *command;
-    while (1)
+    continue_flag = 1;
+    while (continue_flag)
     {
         if (init_two_stack(&target, list))
             return (ERROR);
         if (update_bfs_command(target.command))
             return (ERROR);
-        // 並び替え
-        // 判定
+        if (!operate_commands(&target))
+        {
+            if (len_list(target.list2) == 0 && is_sorted_list(target.list1))
+                continue_flag = 0;
+        }
         free_list(&(target.list1));
         free_list(&(target.list2));
     }
