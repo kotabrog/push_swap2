@@ -1,5 +1,13 @@
 #include "../../inc/push_swap.h"
 
+int operate_and_add_command(t_two_stack *target, char command)
+{
+    if (add_command(target->command, command))
+        return (ERROR);
+    operate_command(&(target->list1), &(target->list2), command);
+    return (SUCCESS);
+}
+
 int operate_command(t_cdl_list **list1, t_cdl_list **list2, char command)
 {
     if (command == COMMAND_SA)

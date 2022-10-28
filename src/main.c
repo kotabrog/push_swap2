@@ -7,12 +7,21 @@ void put_result_and_exit(int mode)
     exit(0);
 }
 
-int push_swap(t_cdl_list *list, t_command **command)
+int push_swap(t_cdl_list *list, t_command *command)
 {
     if (is_sorted_list(list))
         return (SUCCESS);
-    if (bfs_push_swap(list, command))
-        return (ERROR);
+    if (len_list(list) <= 5)
+    {
+        if (bfs_push_swap(list, command))
+            return (ERROR);
+    }
+    else
+    {
+        if (qs_push_swap(list, command))
+            return (ERROR);
+        refactor_command(command);
+    }
     return (SUCCESS);
 }
 
@@ -27,7 +36,7 @@ int main(int argc, char **argv)
         put_result_and_exit(ERROR);
     if (make_command(&command))
         put_result_and_exit(ERROR);
-    if (push_swap(list, &command))
+    if (push_swap(list, command))
         put_result_and_exit(ERROR);
     if (print_commands(command))
         put_result_and_exit(ERROR);

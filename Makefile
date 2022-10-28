@@ -6,6 +6,7 @@ SOURCES =	main.c \
 			check_int.c \
 			quick_sort.c \
 			bfs_push_swap.c \
+			qs_push_swap.c \
 			lib/ft_malloc.c \
 			lib/ft_intcpy.c \
 			lib/ft_isdigit.c \
@@ -28,6 +29,7 @@ SOURCES =	main.c \
 			command/cpy_command.c \
 			command/free_command.c \
 			command/put_command.c \
+			command/refactor_command.c \
 			two_stack/make_two_stack.c \
 			two_stack/operate.c \
 

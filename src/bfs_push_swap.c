@@ -33,12 +33,12 @@ static int init_two_stack(t_two_stack *target, t_cdl_list *list)
     return (SUCCESS);
 }
 
-int bfs_push_swap(t_cdl_list *list, t_command **command)
+int bfs_push_swap(t_cdl_list *list, t_command *command)
 {
     t_two_stack target;
     int continue_flag;
 
-    target.command = *command;
+    target.command = command;
     continue_flag = 1;
     while (continue_flag)
     {
