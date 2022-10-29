@@ -38,6 +38,9 @@ static int is_marge_double_command(char commandA, char commandB)
     if ((commandA == COMMAND_RA && commandB == COMMAND_RB) ||
             (commandA == COMMAND_RB && commandB == COMMAND_RA))
         return (COMMAND_RR);
+    if ((commandA == COMMAND_SA && commandB == COMMAND_SB) ||
+            (commandA == COMMAND_SB && commandB == COMMAND_SA))
+        return (COMMAND_SS);
     if ((commandA == COMMAND_RRA && commandB == COMMAND_RRB) ||
             (commandA == COMMAND_RRB && commandB == COMMAND_RRA))
         return (COMMAND_RRR);
@@ -72,7 +75,9 @@ static int is_double_nop(char commandA, char commandB)
             (commandA == COMMAND_RA && commandB == COMMAND_RRA) ||
             (commandA == COMMAND_RRA && commandB == COMMAND_RA) ||
             (commandA == COMMAND_RB && commandB == COMMAND_RRB) ||
-            (commandA == COMMAND_RRB && commandB == COMMAND_RB));
+            (commandA == COMMAND_RRB && commandB == COMMAND_RB) ||
+            (commandA == COMMAND_SA && commandB == COMMAND_SA) ||
+            (commandA == COMMAND_SB && commandB == COMMAND_SB));
 }
 
 static void delete_double_nop(t_command *command, int *flag)
