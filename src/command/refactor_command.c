@@ -1,18 +1,17 @@
 #include "../../inc/push_swap.h"
 
-static int is_marge_4to3_command(char commandA, char commandB,
-                                 char commandC, char commandD)
+static int is_marge_3to2_command(char commandA, char commandB, char commandC)
 {
     if ((commandA == COMMAND_PB && commandB == COMMAND_RA &&
-            commandC == COMMAND_PA && commandD == COMMAND_RA))
+            commandC == COMMAND_PA))
         return (COMMAND_SA);
     if ((commandA == COMMAND_PA && commandB == COMMAND_RB &&
-            commandC == COMMAND_PB && commandD == COMMAND_RB))
+            commandC == COMMAND_PB))
         return (COMMAND_SB);
     return (0);
 }
 
-static void marge_4to3_command(t_command *command)
+static void marge_3to2_command(t_command *command)
 {
     int i;
     int flag;
@@ -20,14 +19,13 @@ static void marge_4to3_command(t_command *command)
     i = 0;
     while (i < command->len - 3)
     {
-        flag = is_marge_4to3_command((command->list)[i], (command->list)[i + 1],
-                                     (command->list)[i + 2], (command->list)[i + 3]);
+        flag = is_marge_3to2_command((command->list)[i], (command->list)[i + 1],
+                                     (command->list)[i + 2]);
         if (flag)
         {
             command->list[i] = flag;
-            command->list[i + 2] = command->list[i + 3];
-            if (command->len > i + 4)
-                ft_strcpy(&(command->list[i + 3]), &(command->list[i + 4]), command->len - i - 4);
+            if (command->len > i + 3)
+                ft_strcpy(&(command->list[i + 2]), &(command->list[i + 3]), command->len - i - 3);
             command->len -= 1;
         }
         ++i;
@@ -99,5 +97,5 @@ void refactor_command(t_command *command)
 {
     delete_double_nop(command);
     marge_double_command(command);
-    marge_4to3_command(command);
+    marge_3to2_command(command);
 }
