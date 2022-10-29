@@ -87,6 +87,10 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
     int split_point;
     int flag;
 
+    if (num <= 0)
+        return (SUCCESS);
+    else if (num <= 2)
+        return (best_move_btoa(target, num, next_value));
     count[0] = 0;
     count[1] = 0;
     split_point = *next_value + num / 2;

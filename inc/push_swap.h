@@ -61,6 +61,7 @@ int	set_int(char *s, t_int_data *data, t_num *num);
 int check_duplicate(t_cdl_list *list);
 int bfs_push_swap(t_cdl_list *list, t_command *command);
 int qs_push_swap(t_cdl_list *list, t_command *command);
+int best_move_btoa(t_two_stack *target, int num, int *next_value);
 
 // lib
 int ft_malloc(void *pointer, size_t type_size, size_t n);
@@ -101,7 +102,6 @@ int add_command(t_command *command, char one_command);
 void refactor_command(t_command *command);
 
 // two_stack
-
 int make_two_stack(t_two_stack **two_stack, t_cdl_list *list1,
                    t_cdl_list *list2, t_command *command);
 int operate_command(t_cdl_list **list1, t_cdl_list **list2, char command);

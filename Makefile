@@ -7,6 +7,7 @@ SOURCES =	main.c \
 			quick_sort.c \
 			bfs_push_swap.c \
 			qs_push_swap.c \
+			best_move_btoa.c \
 			lib/ft_malloc.c \
 			lib/ft_intcpy.c \
 			lib/ft_isdigit.c \
