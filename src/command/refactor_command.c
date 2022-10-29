@@ -11,7 +11,7 @@ static int is_marge_3to2_command(char commandA, char commandB, char commandC)
     return (0);
 }
 
-static void marge_3to2_command(t_command *command)
+static void marge_3to2_command(t_command *command, int *refactor_flag)
 {
     int i;
     int flag;
@@ -23,6 +23,7 @@ static void marge_3to2_command(t_command *command)
                                      (command->list)[i + 2]);
         if (flag)
         {
+            *refactor_flag = 1;
             command->list[i] = flag;
             if (command->len > i + 3)
                 ft_strcpy(&(command->list[i + 2]), &(command->list[i + 3]), command->len - i - 3);
@@ -43,7 +44,7 @@ static int is_marge_double_command(char commandA, char commandB)
     return (0);
 }
 
-static void marge_double_command(t_command *command)
+static void marge_double_command(t_command *command, int *refactor_flag)
 {
     int i;
     int flag;
@@ -54,6 +55,7 @@ static void marge_double_command(t_command *command)
         flag = is_marge_double_command((command->list)[i], (command->list)[i + 1]);
         if (flag)
         {
+            *refactor_flag = 1;
             command->list[i] = flag;
             if (command->len > i + 2)
                 ft_strcpy(&(command->list[i + 1]), &(command->list[i + 2]), command->len - i - 2);
@@ -73,7 +75,7 @@ static int is_double_nop(char commandA, char commandB)
             (commandA == COMMAND_RRB && commandB == COMMAND_RB));
 }
 
-static void delete_double_nop(t_command *command)
+static void delete_double_nop(t_command *command, int *flag)
 {
     int i;
 
@@ -82,6 +84,7 @@ static void delete_double_nop(t_command *command)
     {
         if (is_double_nop((command->list)[i], (command->list)[i + 1]))
         {
+            *flag = 1;
             if (command->len > i + 2)
                 ft_strcpy(&(command->list[i]), &(command->list[i + 2]), command->len - i - 2);
             command->len -= 2;
@@ -95,7 +98,14 @@ static void delete_double_nop(t_command *command)
 
 void refactor_command(t_command *command)
 {
-    delete_double_nop(command);
-    marge_double_command(command);
-    marge_3to2_command(command);
+    int flag;
+
+    flag = 1;
+    while (flag)
+    {
+        flag = 0;
+        delete_double_nop(command, &flag);
+        marge_double_command(command, &flag);
+        marge_3to2_command(command, &flag);
+    }
 }
