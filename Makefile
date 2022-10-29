@@ -24,6 +24,7 @@ SOURCES =	main.c \
 			cdl_list/rotate_list.c \
 			cdl_list/swap_list.c \
 			cdl_list/is_sorted.c \
+			cdl_list/check_value.c \
 			command/make_command.c \
 			command/add_command.c \
 			command/cpy_command.c \

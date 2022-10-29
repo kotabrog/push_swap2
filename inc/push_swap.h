@@ -90,6 +90,7 @@ int rotate_two_list(t_cdl_list **list1, t_cdl_list **list2);
 int rotate_reverse_list(t_cdl_list **list);
 int rotate_reverse_two_list(t_cdl_list **list1, t_cdl_list **list2);
 int is_sorted_list(t_cdl_list *list);
+int is_any_less_value_list(t_cdl_list *list, int num, int split_point);
 
 // command
 int make_command(t_command **command);

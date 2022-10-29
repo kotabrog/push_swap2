@@ -133,7 +133,7 @@ static int split_push_b_first(t_two_stack *target)
             if (len_list(target->list2) >= 2)
                 flag = flag || operate_and_add_command(target, COMMAND_RB);
         }
-        else if (i != 0)
+        else if (is_any_less_value_list(target->list1, i + 1, split_point * 2))
             flag = operate_and_add_command(target, COMMAND_RA);
     }
     if (split_push_a(target, split_point, &flag))
