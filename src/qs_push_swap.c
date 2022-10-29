@@ -56,7 +56,8 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
         else
         {
             flag = operate_and_add_command(target, COMMAND_PB);
-            flag = flag || operate_and_add_command(target, COMMAND_RB);
+            if (len_list(target->list2) >= 2)
+                flag = flag || operate_and_add_command(target, COMMAND_RB);
             count[1] += 1;
         }
     }
@@ -99,7 +100,8 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
         }
         else
         {
-            flag = operate_and_add_command(target, COMMAND_RB);
+            if (len_list(target->list2) >= 2)
+                flag = operate_and_add_command(target, COMMAND_RB);
             count[1] += 1;
         }
     }
@@ -128,7 +130,8 @@ static int split_push_b_first(t_two_stack *target)
         else if (*(target->list1->v) < split_point * 2)
         {
             flag = operate_and_add_command(target, COMMAND_PB);
-            flag = flag || operate_and_add_command(target, COMMAND_RB);
+            if (len_list(target->list2) >= 2)
+                flag = flag || operate_and_add_command(target, COMMAND_RB);
         }
         else if (i != 0)
             flag = operate_and_add_command(target, COMMAND_RA);
