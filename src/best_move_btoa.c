@@ -28,7 +28,6 @@ static int best_2_move(t_two_stack *target, int next_value)
 static int best_3_move(t_two_stack *target, int next_value)
 {
     int flag;
-    int last_is_first;
 
     if (*(target->list2->v) == next_value)
     {
@@ -38,22 +37,57 @@ static int best_3_move(t_two_stack *target, int next_value)
     }
     if (*(target->list2->v) == next_value + 2)
     {
-        flag = best_2_move(target, next_value + 1);
+        flag = operate_and_add_command(target, COMMAND_PA);
+        flag = flag || best_2_move(target, next_value);
+        return (flag || operate_and_add_command(target, COMMAND_RA));
+    }
+    if (*(target->list2->next->v) == next_value)
+    {
+        flag = best_2_move(target, next_value);
         flag = flag || operate_and_add_command(target, COMMAND_PA);
         return (flag || operate_and_add_command(target, COMMAND_RA));
     }
-    last_is_first = (*(target->list2->v) == next_value + 2);
     flag = operate_and_add_command(target, COMMAND_PA);
     flag = flag || operate_and_add_command(target, COMMAND_PA);
-    flag = flag || operate_and_add_command(target, COMMAND_RA);
-    if (!last_is_first)
-        flag = flag || operate_and_add_command(target, COMMAND_RA);
+    flag = flag || operate_and_add_command(target, COMMAND_SA);
     flag = flag || operate_and_add_command(target, COMMAND_PA);
     flag = flag || operate_and_add_command(target, COMMAND_RA);
-    if (last_is_first)
-        flag = flag || operate_and_add_command(target, COMMAND_RA);
-    return (flag);
+    flag = flag || operate_and_add_command(target, COMMAND_RA);
+    return (flag || operate_and_add_command(target, COMMAND_RA));
 }
+
+// static int next_is_3_in_4(t_two_stack *target, int next_value)
+// {
+//     int flag;
+//     int last_is_first;
+// }
+
+// static int best_4_move(t_two_stack *target, int next_value)
+// {
+//     int flag;
+
+//     if (*(target->list2->v) == next_value)
+//     {
+//         flag = operate_and_add_command(target, COMMAND_PA);
+//         flag = flag || operate_and_add_command(target, COMMAND_RA);
+//         return (flag || best_3_move(target, next_value + 1));
+//     }
+//     if (*(target->list2->v) == next_value + 3)
+//     {
+//         flag = best_3_move(target, next_value + 1);
+//         flag = flag || operate_and_add_command(target, COMMAND_PA);
+//         return (flag || operate_and_add_command(target, COMMAND_RA));
+//     }
+//     if (*(target->list2->v) == next_value + 1)
+//     {
+//         flag = operate_and_add_command(target, COMMAND_PA);
+//         flag = flag || operate_and_add_command(target, COMMAND_PA);
+//         flag = flag || operate_and_add_command(target, COMMAND_RA);
+//         flag = flag || operate_and_add_command(target, COMMAND_PB);
+//         return (flag || best_3_move(target, next_value + 1));
+//     }
+//     return (next_is_3_in_4(target, next_value));
+// }
 
 int best_move_btoa(t_two_stack *target, int num, int *next_value)
 {
