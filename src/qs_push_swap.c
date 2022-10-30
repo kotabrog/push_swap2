@@ -75,7 +75,7 @@ static int rotate_reverse_b_and_push_a(t_two_stack *target, int num,
 
 static int split_push_b(t_two_stack *target, int num, int *next_value)
 {
-    int count[2];
+    int count[3];
     int split_point;
     int flag;
 
@@ -85,6 +85,7 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
         return (best_move_atob(target, num, next_value));
     count[0] = 0;
     count[1] = 0;
+    count[2] = 0;
     split_point = *next_value + num / 2 + 2;
     flag = 0;
     while (!flag && num-- > 0)
@@ -115,15 +116,20 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
         else
         {
             flag = operate_and_add_command(target, COMMAND_PB);
-            if (len_list(target->list2) >= 2)
-                flag = flag || operate_and_add_command(target, COMMAND_RB);
-            count[1] += 1;
+            if (count[0] == 0)
+                count[2] += 1;
+            else
+            {
+                if (len_list(target->list2) >= 2)
+                    flag = flag || operate_and_add_command(target, COMMAND_RB);
+                count[1] += 1;
+            }
         }
     }
     if (count[0] > 0)
         flag = split_push_a(target, count[0], next_value);
-    if (!flag && count[1] > 0)
-        flag = rotate_reverse_b_and_push_a(target, count[1], next_value, 0);
+    if (!flag && (count[1] > 0 || count[2] > 0))
+        flag = rotate_reverse_b_and_push_a(target, count[1], next_value, count[2]);
     return (flag);
 }
 
