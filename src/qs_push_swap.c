@@ -1,38 +1,75 @@
 #include "../inc/push_swap.h"
 
 static int split_push_a(t_two_stack *target, int num, int *next_value);
+static int split_push_b(t_two_stack *target, int num, int *next_value);
 
 static int rotate_reverse_b_and_push_a(t_two_stack *target, int num,
                                        int *next_value, int rotated)
 {
+    int count[2];
+    int split_point;
     int flag;
-    int i;
 
+    count[0] = 0;
+    count[1] = 0;
+    split_point = *next_value + (num + rotated) / 2;
     flag = 0;
-    while (!flag && rotated > 0 && *(target->list2->v) == *next_value)
+    while (!flag && rotated-- > 0)
     {
-        flag = operate_and_add_command(target, COMMAND_PA);
-        flag = flag || operate_and_add_command(target, COMMAND_RA);
-        *next_value += + 1;
-        rotated -= 1;
-    }
-    i = num;
-    while (!flag && i-- > 0)
-    {
-        flag = operate_and_add_command(target, COMMAND_RRB);
-        while (!flag && num + rotated - i > 0 && *(target->list2->v) == *next_value)
+        if (*(target->list2->v) == *next_value)
         {
             flag = operate_and_add_command(target, COMMAND_PA);
             flag = flag || operate_and_add_command(target, COMMAND_RA);
             *next_value += + 1;
-            if (num - i > 0)
-                num -= 1;
-            else
-                rotated -= 1;
+            while (!flag && count[0] > 0 && *(target->list1->v) == *next_value)
+            {
+                flag = operate_and_add_command(target, COMMAND_RA);
+                *next_value += + 1;
+                count[0] -= 1;
+            }
+        }
+        else if (*(target->list2->v) < split_point)
+        {
+            flag = operate_and_add_command(target, COMMAND_PA);
+            count[0] += 1;
+        }
+        else if (!is_any_less_value_list(target->list2, rotated + 1, split_point))
+            break;
+        else
+        {
+            if (len_list(target->list2) >= 2)
+                flag = operate_and_add_command(target, COMMAND_RB);
+            num += 1;
         }
     }
-    if (num + rotated > 0)
-        flag = split_push_a(target, num + rotated, next_value);
+    count[1] = rotated + 1;
+    while (!flag && num-- > 0)
+    {
+        flag = operate_and_add_command(target, COMMAND_RRB);
+        if (*(target->list2->v) == *next_value)
+        {
+            flag = operate_and_add_command(target, COMMAND_PA);
+            flag = flag || operate_and_add_command(target, COMMAND_RA);
+            *next_value += + 1;
+            while (!flag && count[0] > 0 && *(target->list1->v) == *next_value)
+            {
+                flag = operate_and_add_command(target, COMMAND_RA);
+                *next_value += + 1;
+                count[0] -= 1;
+            }
+        }
+        else if (*(target->list2->v) < split_point)
+        {
+            flag = operate_and_add_command(target, COMMAND_PA);
+            count[0] += 1;
+        }
+        else
+            count[1] += 1;
+    }
+    if (count[0] > 0)
+        flag = split_push_b(target, count[0], next_value);
+    if (!flag && count[1] > 0)
+        flag = split_push_a(target, count[1], next_value);
     return (flag);
 }
 
