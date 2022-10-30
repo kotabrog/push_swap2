@@ -44,7 +44,7 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
 
     if (num <= 0)
         return (SUCCESS);
-    else if (num <= 2)
+    else if (num <= 3)
         return (best_move_atob(target, num, next_value));
     count[0] = 0;
     count[1] = 0;
