@@ -139,6 +139,7 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
     int count[2];
     int split_point;
     int flag;
+    // int next_flag;
 
     if (num <= 0)
         return (SUCCESS);
@@ -148,6 +149,7 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
     count[1] = 0;
     split_point = *next_value + num / 2 + 1;
     flag = 0;
+    // next_flag = 0;
     while (!flag && num-- > 0)
     {
         if (count[0] == 0 && num + 1 <= 4 &&
@@ -167,8 +169,17 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
                 flag = operate_and_add_command(target, COMMAND_RA);
                 *next_value += + 1;
                 count[0] -= 1;
+                if (!flag && count[0] >= 2 && *(target->list1->next->v) == *next_value)
+                    flag = operate_and_add_command(target, COMMAND_SA);
             }
         }
+        // else if (*(target->list2->v) == *next_value + 1 &&
+        //         num >= 1 &&
+        //         *(target->list2->next->v) != *next_value &&
+        //         is_any_less_value_list(target->list2, num + 1, *next_value + 1))
+        // {
+            
+        // }
         else if (*(target->list2->v) < split_point)
         {
             flag = operate_and_add_command(target, COMMAND_PA);
