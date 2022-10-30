@@ -73,11 +73,35 @@ static int rotate_reverse_b_and_push_a(t_two_stack *target, int num,
     return (flag);
 }
 
+static int check_keep_push_b(t_two_stack *target, int num, int next_value, int split_point)
+{
+    t_cdl_list *temp;
+    int count;
+
+    if (*(target->list1->v) != next_value + 1 ||
+            next_value >= split_point ||
+            num < 3 ||
+            !is_any_less_value_list(target->list1, num, next_value + 1))
+        return (0);
+    temp = target->list1;
+    count = 0;
+    while (--num > 0 && count < 2)
+    {
+        temp = temp->next;
+        if (*(temp->v) == next_value)
+            break;
+        if (*(temp->v) < split_point)
+            count += 1;
+    }
+    return (count == 2);
+}
+
 static int split_push_b(t_two_stack *target, int num, int *next_value)
 {
     int count[3];
     int split_point;
     int flag;
+    int next_flag;
 
     if (num <= 0)
         return (SUCCESS);
@@ -88,6 +112,7 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
     count[2] = 0;
     split_point = *next_value + num / 2 + 2;
     flag = 0;
+    next_flag = 0;
     while (!flag && num-- > 0)
     {
         if (count[0] == 0 && num + 1 <= 4 &&
@@ -98,6 +123,13 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
         }
         else if (*(target->list1->v) == *next_value)
         {
+            if (next_flag)
+            {
+                flag = operate_and_add_command(target, COMMAND_RRA);
+                flag = flag || operate_and_add_command(target, COMMAND_SA);
+                next_flag = 0;
+                num += 1;
+            }
             flag = operate_and_add_command(target, COMMAND_RA);
             *next_value += + 1;
             while (!flag && count[0] > 0 && *(target->list2->v) == *next_value)
@@ -107,6 +139,11 @@ static int split_push_b(t_two_stack *target, int num, int *next_value)
                 *next_value += + 1;
                 count[0] -= 1;
             }
+        }
+        else if (check_keep_push_b(target, num + 1, *next_value, split_point))
+        {
+            flag = operate_and_add_command(target, COMMAND_RA);
+            next_flag = 1;
         }
         else if (*(target->list1->v) < split_point)
         {
