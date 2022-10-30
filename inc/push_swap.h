@@ -62,7 +62,9 @@ int check_duplicate(t_cdl_list *list);
 int bfs_push_swap(t_cdl_list *list, t_command *command);
 int qs_push_swap(t_cdl_list *list, t_command *command);
 int best_move_btoa(t_two_stack *target, int num, int *next_value);
+int best_3_move_btoa(t_two_stack *target, int next_value);
 int best_move_atob(t_two_stack *target, int num, int *next_value);
+int best_3_move_atob(t_two_stack *target, int next_value);
 
 // lib
 int ft_malloc(void *pointer, size_t type_size, size_t n);
