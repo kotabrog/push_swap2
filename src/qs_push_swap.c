@@ -138,7 +138,14 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
     flag = 0;
     while (!flag && num-- > 0)
     {
-        if (*(target->list2->v) == *next_value)
+        if (count[0] == 0 && num + 1 <= 4 &&
+                is_all_less_value_list(target->list2, num + 1, *next_value + num + 1))
+        {
+            flag = best_move_btoa(target, num + 1, next_value);
+            num = -1;
+            break;
+        }
+        else if (*(target->list2->v) == *next_value)
         {
             flag = operate_and_add_command(target, COMMAND_PA);
             flag = flag || operate_and_add_command(target, COMMAND_RA);
