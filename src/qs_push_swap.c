@@ -134,7 +134,7 @@ static int split_push_a(t_two_stack *target, int num, int *next_value)
         return (best_move_btoa(target, num, next_value));
     count[0] = 0;
     count[1] = 0;
-    split_point = *next_value + num / 2;
+    split_point = *next_value + num / 2 + 1;
     flag = 0;
     while (!flag && num-- > 0)
     {
